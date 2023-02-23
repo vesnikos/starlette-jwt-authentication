@@ -1,0 +1,42 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+start-dev-server = "uvicorn starlette_swt_authentication.app:app --reload --debug"
+test = 'pytest'
+format = 'black src tests'
+lint = 'pylint src tests'
+start-server = "uvicorn starlette_swt_authentication.app:app"
+sort-pyproject = "toml-sort pyproject.toml --in-place"
+
+[tool.poetry]
+name = "starlette-swt-authentication"
+version = "0.1.0"
+description = "A sample Starlette application that uses JWT authentication"
+authors = ["Nikos Ves <nick.ves@glasgow.ac.uk>"]
+readme = "README.md"
+packages = [{include = "starlette_swt_authentication", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+starlette = "^0.25.0"
+uvicorn = "^0.20.0"
+pyjwt = "^2.6.0"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "^0.18.1"
+pytest = "^7.2.1"
+black = "^23.1.0"
+pylint = "^2.16.2"
+toml-sort = "^0.22.3"
+httpx = "^0.23.3"
+pylint-pytest = "^1.1.2"
+pytest-cov = "^4.0.0"
+
+[tool.pylint]
+disable = "C0114,C0115,C0116,W0511,abstract-method,arguments-renamed,too-few-public-methods"
+load-plugins = "pylint_pytest"
+
+[tool.pytest.ini_options]
+addopts = "--cov=src/starlette_swt_authentication"
